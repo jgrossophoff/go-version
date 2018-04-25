@@ -1,5 +1,5 @@
 # Versioning Library for Go
-[![Build Status](https://travis-ci.org/hashicorp/go-version.svg?branch=master)](https://travis-ci.org/hashicorp/go-version) 
+[![Build Status](https://travis-ci.org/jgrossophoff/go-version.svg?branch=master)](https://travis-ci.org/jgrossophoff/go-version)
 
 go-version is a library for parsing versions and version constraints,
 and verifying versions against a set of constraints. go-version
@@ -8,15 +8,19 @@ versions, can increment versions, etc.
 
 Versions used with go-version must follow [SemVer](http://semver.org/).
 
+## Credits
+
+All credits go to [hashicorp/go-version](https://github.com/hashicorp/go-version) and [burl/go-version](https://github.com/burl/go-version). I just added undocumented functionality as needed.
+
 ## Installation and Usage
 
 Package documentation can be found on
-[GoDoc](http://godoc.org/github.com/hashicorp/go-version).
+[GoDoc](http://godoc.org/github.com/jgrossophoff/go-version).
 
 Installation can be done with a normal `go get`:
 
 ```
-$ go get github.com/hashicorp/go-version
+$ go get github.com/jgrossophoff/go-version
 ```
 
 #### Version Parsing and Comparison
