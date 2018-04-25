@@ -209,6 +209,39 @@ func TestVersionString(t *testing.T) {
 	}
 }
 
+func TestSetPart(t *testing.T) {
+	cases := []struct {
+		version string
+		part    VersionPart
+		val     int
+		result  string
+		err     bool
+	}{
+		{"1.1.1", MajorPart, 2, "2.1.1", false},
+		{"1.1.1", MinorPart, 0, "1.0.1", false},
+		{"1.1.1", PatchPart, 10, "1.1.10", false},
+		{"1.1.0-beta1", PreReleasePart, 1, "", true},
+	}
+
+	for _, tc := range cases {
+		v, err := NewVersion(tc.version)
+		if err != nil {
+			t.Fatalf("error parsing version %s", tc.version)
+		}
+		err = v.SetPart(tc.part, tc.val)
+		if tc.err && err == nil {
+			t.Fatalf("expected error for SetPart of part %d in version %s", tc.part, tc.version)
+		} else if !tc.err && err != nil {
+			t.Fatalf("expected no error for SetPart of part %d in version %s", tc.part, tc.version)
+		}
+		if !tc.err {
+			if v.String() != tc.result {
+				t.Fatalf("SetPart %d to %d in %s, expecting: %s\nfound %s", tc.part, tc.val, tc.version, tc.result, v.String())
+			}
+		}
+	}
+}
+
 func TestBumpVersion(t *testing.T) {
 	cases := []struct {
 		version string

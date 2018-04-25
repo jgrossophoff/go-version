@@ -265,6 +265,17 @@ func (v *Version) String() string {
 	return buf.String()
 }
 
+// SetPart sets MajorPart, MinorPart or PatchPart to v.
+func (v *Version) SetPart(part VersionPart, val int) error {
+	switch part {
+	case MajorPart, MinorPart, PatchPart:
+		v.segments[part] = val
+	default:
+		return fmt.Errorf("unable to set version part %s", partNames[part])
+	}
+	return nil
+}
+
 // BumpVersion - increment the indicated part by one
 // part may be one of: MajorPart, MinorPart or PatchPart
 func (v *Version) BumpVersion(part VersionPart) (err error) {
