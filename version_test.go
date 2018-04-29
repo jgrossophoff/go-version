@@ -247,6 +247,39 @@ func TestBumpVersion(t *testing.T) {
 		version string
 		part    VersionPart
 		result  string
+	}{
+		{"1.1.1", MajorPart, "2.0.0"},
+		{"1.1.1", MinorPart, "1.2.0"},
+		{"1.1.1", PatchPart, "1.1.2"},
+		{"2", MajorPart, "3.0.0"},
+		{"2.2", MinorPart, "2.3.0"},
+		{"2.2.0", PatchPart, "2.2.1"},
+		{"1.1.0-beta1", PatchPart, "1.1.1"},
+		{"1.1.0-beta1", MinorPart, "1.2.0"},
+		{"1.1.0-beta1", MajorPart, "2.0.0"},
+	}
+
+	for idx, tc := range cases {
+		v, err := NewVersion(tc.version)
+		if err != nil {
+			t.Fatalf("test case #%d failed: error parsing version %s: %s", idx+1, tc.version, err)
+			continue
+		}
+		if err := v.BumpVersion(tc.part); err != nil {
+			t.Fatalf("test case #%d failed: error bumping version %s: %s", idx+1, tc.version, err)
+			continue
+		}
+		if v.String() != tc.result {
+			t.Fatalf("test case #%d failed: bumping version part %d in %s, expecting: %s got %s", idx+1, tc.part, tc.version, tc.result, v.String())
+		}
+	}
+}
+
+func TestBumpPart(t *testing.T) {
+	cases := []struct {
+		version string
+		part    VersionPart
+		result  string
 		err     bool
 	}{
 		{"1.1.1", MajorPart, "2.1.1", false},
@@ -262,17 +295,20 @@ func TestBumpVersion(t *testing.T) {
 	for _, tc := range cases {
 		v, err := NewVersion(tc.version)
 		if err != nil {
-			t.Fatalf("error parsing version %s", tc.version)
+			t.Fatalf("error parsing version %s, %s", tc.version, err)
+			continue
 		}
-		err = v.BumpVersion(tc.part)
+		err = v.BumpPart(tc.part)
 		if tc.err && err == nil {
 			t.Fatalf("expected error for version: %s", tc.version)
+			continue
 		} else if !tc.err && err != nil {
 			t.Fatalf("error for version %s: %s", tc.version, err)
+			continue
 		}
 		if !tc.err {
 			if v.String() != tc.result {
-				t.Fatalf("BumpVersion %d, expecting: %s\nfound %s", tc.part, tc.result, v.String())
+				t.Fatalf("bumping part %d of %s, expecting: %s got %s", tc.part, tc.version, tc.result, v.String())
 			}
 		}
 	}

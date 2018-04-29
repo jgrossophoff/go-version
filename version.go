@@ -276,9 +276,30 @@ func (v *Version) SetPart(part VersionPart, val int) error {
 	return nil
 }
 
-// BumpVersion - increment the indicated part by 1.
+// BumpVersion does the same as BumpPart but resets all lesser parts to 0.
+func (v *Version) BumpVersion(part VersionPart) error {
+	const reset = 0
+
+	if part <= PatchPart && (v.pre != "" || v.metadata != "") {
+		v.pre = ""
+		v.metadata = ""
+	}
+	if part <= MinorPart {
+		if err := v.SetPart(PatchPart, reset); err != nil {
+			return fmt.Errorf("unable to reset patch to 0 when bumping minor part in version %q: %s\n", v, err)
+		}
+	}
+	if part <= MajorPart {
+		if err := v.SetPart(MinorPart, reset); err != nil {
+			return fmt.Errorf("unable to reset minor to 0 when bumping major in part version %q: %s\n", v, err)
+		}
+	}
+	return v.BumpPart(part)
+}
+
+// BumpPart increments the indicated part by 1.
 // part may be one of: MajorPart, MinorPart or PatchPart
-func (v *Version) BumpVersion(part VersionPart) (err error) {
+func (v *Version) BumpPart(part VersionPart) (err error) {
 	switch part {
 	case MajorPart, MinorPart, PatchPart:
 		v.segments[part]++
