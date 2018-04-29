@@ -276,7 +276,7 @@ func (v *Version) SetPart(part VersionPart, val int) error {
 	return nil
 }
 
-// BumpVersion - increment the indicated part by one
+// BumpVersion - increment the indicated part by 1.
 // part may be one of: MajorPart, MinorPart or PatchPart
 func (v *Version) BumpVersion(part VersionPart) (err error) {
 	switch part {
@@ -288,12 +288,12 @@ func (v *Version) BumpVersion(part VersionPart) (err error) {
 	return
 }
 
-// MarshalJSON - implement the json-Marshaler interface
+// MarshalJSON implements the json packages Marshaler interface
 func (v *Version) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, v.String())), nil
 }
 
-// UnmarshalJSON - implement the json-Unmarshaler interface
+// UnmarshalJSON implements the json packages Unmarshaler interface
 func (v *Version) UnmarshalJSON(data []byte) (err error) {
 	var verStr string
 	var nv *Version
@@ -312,13 +312,13 @@ func (v *Version) UnmarshalJSON(data []byte) (err error) {
 	return
 }
 
-// MarshalYAML - implement the YAML-Marshaler interface (gopkg.in/yaml.v2)
+// MarshalYAML implements the YAML packages Marshaler interface (gopkg.in/yaml.v2)
 func (v *Version) MarshalYAML() (str interface{}, err error) {
 	str = v.String()
 	return
 }
 
-// UnmarshalYAML - implement the yaml-Unmarshaler interface (gopkg.in/yaml.v2)
+// UnmarshalYAML implements the YAML packages Unmarshaler interface (gopkg.in/yaml.v2)
 func (v *Version) UnmarshalYAML(unmarshal func(interface{}) error) (err error) {
 	var (
 		verStr string
