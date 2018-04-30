@@ -1,12 +1,12 @@
 # Versioning Library for Go
-[![Build Status](https://travis-ci.org/jgrossophoff/go-version.svg?branch=master)](https://travis-ci.org/jgrossophoff/go-version)
+[![Build Status](https://travis-ci.org/jgrossophoff/version.svg?branch=master)](https://travis-ci.org/jgrossophoff/version)
 
-go-version is a library for parsing versions and version constraints,
-and verifying versions against a set of constraints. go-version
+version is a library for parsing versions, version constraints,
+and verifying versions against a set of constraints. version
 can sort a collection of versions properly, handles prerelease/beta
 versions, can increment versions, etc.
 
-Versions used with go-version must follow [SemVer](http://semver.org/).
+Versions are supposed to follow [SemVer](http://semver.org/).
 
 ## Credits
 
@@ -15,12 +15,12 @@ All credits go to [hashicorp/go-version](https://github.com/hashicorp/go-version
 ## Installation and Usage
 
 Package documentation can be found on
-[GoDoc](http://godoc.org/github.com/jgrossophoff/go-version).
+[GoDoc](http://godoc.org/github.com/jgrossophoff/version).
 
-Installation can be done with a normal `go get`:
+This package is go gettable:
 
 ```
-$ go get github.com/jgrossophoff/go-version
+$ go get github.com/jgrossophoff/version
 ```
 
 #### Version Parsing and Comparison
@@ -61,6 +61,24 @@ for i, raw := range versionsRaw {
 // After this, the versions are properly sorted
 sort.Sort(version.Collection(versions))
 ```
+
+## Dependencies
+
+There are no dependencies aside from the stdlib:
+
+<pre>
+github.com/jgrossophoff/version
+  ├ bytes
+  ├ encoding/json
+  ├ fmt
+  ├ reflect
+  ├ regexp
+  ├ strconv
+  └ strings
+7 dependencies (7 internal, 0 external, 0 testing).
+</pre>
+
+(Visualized with [depth](https://github.com/KyleBanks/depth).
 
 ## Issues and Contributing
 
