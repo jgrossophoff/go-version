@@ -78,7 +78,7 @@ github.com/jgrossophoff/version
 7 dependencies (7 internal, 0 external, 0 testing).
 </pre>
 
-(Visualized with [depth](https://github.com/KyleBanks/depth).
+(Visualized with [depth](https://github.com/KyleBanks/depth).)
 
 ## Issues and Contributing
 
